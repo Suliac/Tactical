@@ -1,25 +1,35 @@
 ﻿using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GenericsSpawner : MonoBehaviour
 {
     public GameObject GameManagerPrefab;
-
+    [Header("Grid")]
+    public uint GridLength = 2;
+    public uint GridWidth = 2;
     // Start is called before the first frame update
     void Start()
     {
         Instantiate(GameManagerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-        //// 1 - Create archetypes
-        //EntityArchetype archetypeGameManager = entityManager.CreateArchetype(
-        //    typeof(PlayerMouseInputsComponent)
-        //);
+        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-        //// 2- Create the entities
-        //Entity gameManager = entityManager.CreateEntity(archetypeGameManager);
+        // Create archetypes
+        EntityArchetype archetypeGridCell = entityManager.CreateArchetype(
+            typeof(GridCell)
+        );
 
-        //entityManager.AddComponentData(gameManager, new PlayerMouseInputsComponent());
+        // Create the entities
+        for (uint x = 0; x < GridWidth; x++)
+        {
+            for (uint y = 0; y < GridLength; y++)
+            {
+                Entity gameManager = entityManager.CreateEntity(archetypeGridCell);
+                entityManager.AddComponentData(gameManager, new GridCell() { GridPosition = new uint2(x, y)});
+            }
+        }
+
     }
 
 }
