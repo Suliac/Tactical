@@ -48,6 +48,9 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  CurrentMousePosGridView:
+    x: 0
+    y: 0
   IsPressingRightClick: 0
   IsPressingLeftClick: 0
   WasRightClickPressedThisFrame: 0

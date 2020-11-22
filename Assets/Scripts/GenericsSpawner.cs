@@ -4,32 +4,52 @@ using UnityEngine;
 
 public class GenericsSpawner : MonoBehaviour
 {
-    public GameObject GameManagerPrefab;
-    [Header("Grid")]
-    public uint GridLength = 2;
-    public uint GridWidth = 2;
+    public GameObject TextPrefab;
+
+    [Header("Grid Params")]
+    public uint ParamGridCellSize = 1;
+    public uint ParamGridWidth = 10;
+    public uint ParamGridLength = 10;
+    public float3 ParamStartGridPosition = float3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(GameManagerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
         var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         // Create archetypes
+        EntityArchetype archetypeGrid = entityManager.CreateArchetype(
+            typeof(PlayerMouseInputsComponent),
+            typeof(GridComponent)
+        );
+
         EntityArchetype archetypeGridCell = entityManager.CreateArchetype(
-            typeof(GridCell)
+            typeof(GridCellComponent)
         );
 
         // Create the entities
-        for (uint x = 0; x < GridWidth; x++)
+        Entity grid = entityManager.CreateEntity(archetypeGrid);
+        entityManager.AddComponentData(grid, new PlayerMouseInputsComponent());
+        entityManager.AddComponentData(grid, new GridComponent()
         {
-            for (uint y = 0; y < GridLength; y++)
+            CellSize = ParamGridCellSize,
+            GridLength = ParamGridLength,
+            GridWidth = ParamGridWidth,
+            StartGridPosition = ParamStartGridPosition
+        });
+
+        for (uint x = 0; x < ParamGridWidth; x++)
+        {
+            for (uint y = 0; y < ParamGridLength; y++)
             {
-                Entity gameManager = entityManager.CreateEntity(archetypeGridCell);
-                entityManager.AddComponentData(gameManager, new GridCell() { GridPosition = new uint2(x, y)});
+                Entity cell = entityManager.CreateEntity(archetypeGridCell);
+                entityManager.AddComponentData(cell, new GridCellComponent()
+                {
+                    GridPosition = new uint2(x, y),
+                    WorldPosition = new float3(x * ParamGridCellSize + ParamStartGridPosition.x, ParamStartGridPosition.y, y * ParamGridCellSize + ParamStartGridPosition.z)
+            });
             }
         }
-
     }
 
 }
