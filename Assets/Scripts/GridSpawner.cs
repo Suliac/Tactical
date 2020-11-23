@@ -2,15 +2,13 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class GenericsSpawner : MonoBehaviour
+public class GridSpawner : MonoBehaviour
 {
     public GameObject TextPrefab;
 
     [Header("Grid Params")]
-    public uint ParamGridCellSize = 1;
     public uint ParamGridWidth = 10;
     public uint ParamGridLength = 10;
-    public float3 ParamStartGridPosition = float3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -32,10 +30,8 @@ public class GenericsSpawner : MonoBehaviour
         entityManager.AddComponentData(grid, new PlayerMouseInputsComponent());
         entityManager.AddComponentData(grid, new GridComponent()
         {
-            CellSize = ParamGridCellSize,
             GridLength = ParamGridLength,
-            GridWidth = ParamGridWidth,
-            StartGridPosition = ParamStartGridPosition
+            GridWidth = ParamGridWidth
         });
 
         for (uint x = 0; x < ParamGridWidth; x++)
@@ -45,8 +41,7 @@ public class GenericsSpawner : MonoBehaviour
                 Entity cell = entityManager.CreateEntity(archetypeGridCell);
                 entityManager.AddComponentData(cell, new GridCellComponent()
                 {
-                    GridPosition = new uint2(x, y),
-                    WorldPosition = new float3(x * ParamGridCellSize + ParamStartGridPosition.x, ParamStartGridPosition.y, y * ParamGridCellSize + ParamStartGridPosition.z)
+                    GridPosition = new uint2(x, y)
             });
             }
         }
