@@ -3,22 +3,24 @@ using Unity.Mathematics;
 
 public class ProcessClickOnCellSystem : SystemBase
 {
+    EntityManager entityManager;
+
     protected override void OnCreate()
     {
+        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
     }
 
     protected override void OnUpdate()
     {
-        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        
         Entities
-            .WithoutBurst()
-            .WithStructuralChanges()
-            .ForEach((ref GridCellComponent cell, in GridCellOnClickedComponent clickedCell) =>
+            .ForEach((ref GridCellComponent cell, ref GridCellOnHoverComponent onHover) =>
             {
-                cell.ClickCountCell++;
-                entityManager.RemoveComponent<GridCellOnClickedComponent>(GetEntityQuery(typeof(GridCellComponent), typeof(GridCellOnClickedComponent)));
-            }).Run();
+                if (onHover.LeftClickOnCellThisFrame)
+                {
+                    cell.ClickCountCell++;
+                    onHover.LeftClickOnCellThisFrame = false;
+                }
+            }).ScheduleParallel();
 
     }
 }

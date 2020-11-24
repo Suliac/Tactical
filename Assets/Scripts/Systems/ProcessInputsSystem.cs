@@ -18,22 +18,19 @@ public class ProcessInputsSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        var mouse = Mouse.current;
-        Vector2 screenViewMousePos = mouse.position.ReadValue();
+        Vector2 screenViewMousePos = Mouse.current.position.ReadValue();
 
         if (!(0 > screenViewMousePos.x || 0 > screenViewMousePos.y || Screen.width < screenViewMousePos.x || Screen.height < screenViewMousePos.y))
         {
-            bool rbIsPressed = mouse.rightButton.isPressed;
-            bool lbIsPressed = mouse.leftButton.isPressed;
-            bool rbPressedThisFrame = mouse.rightButton.wasPressedThisFrame;
-            bool lbPressedThisFrame = mouse.leftButton.wasPressedThisFrame;
-
             Ray ray = Camera.main.ScreenPointToRay(screenViewMousePos);
             RaycastHit hit = new RaycastHit();
 
             // at each frame for now, not sure about that
             if (Physics.Raycast(ray, out hit, LayerMask.GetMask("FloorMap")))
             {
+                // Acquire an ECB and convert it to a concurrent one to be able
+                // to use it from a parallel job.
+                var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer().AsParallelWriter();
                 Entities
                     .ForEach((ref PlayerMouseInputsComponent mouseInputs) =>
                     {
@@ -41,37 +38,43 @@ public class ProcessInputsSystem : SystemBase
                         mouseInputs.CurrentMousePosWorldView = hit.point;
                     }).Run();
 
+                float worldFlooredX = Mathf.Floor(hit.point.x);
+                float worldFlooredZ = Mathf.Floor(hit.point.z);
 
-                // Acquire an ECB and convert it to a concurrent one to be able
-                // to use it from a parallel job.
-                var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer().AsParallelWriter();
+                // Process left click
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    Entities
+                       .ForEach((ref GridCellOnHoverComponent onHover, in GridCellComponent cell) =>
+                       {
+                           // As we are deleting the OnHoverComponent at the end of the frame we may come here when we are the "old" hovered cell
+                           if (worldFlooredX == cell.GridPosition.x
+                              && worldFlooredZ == cell.GridPosition.y)
+                           {
+                               onHover.LeftClickOnCellThisFrame = true;
+                           }
+                       }).ScheduleParallel();
+                }
 
+                // Process on hover
                 JobHandle jobHandle = Entities
-                    .ForEach((Entity entity, int entityInQueryIndex, in GridCellComponent cell) =>
+                .ForEach((Entity entity, int entityInQueryIndex, in GridCellComponent cell) =>
+                {
+                    bool isCurrentCellOnHover = cell.GridPosition.x == worldFlooredX && cell.GridPosition.y == worldFlooredZ;
+                    bool hasOnHoverComponent = HasComponent<GridCellOnHoverComponent>(entity);
+
+                    if (hasOnHoverComponent && !isCurrentCellOnHover)
                     {
-                        float worldFlooredX = Mathf.Floor(hit.point.x);
-                        float worldFlooredZ = Mathf.Floor(hit.point.z);
+                        ecb.RemoveComponent<GridCellOnHoverComponent>(entityInQueryIndex, entity);
+                    }
 
-                        bool isCurrentCellOnHover = cell.GridPosition.x == worldFlooredX && cell.GridPosition.y == worldFlooredZ;
+                    // Add component if the mouse is over a cell without an already existing OnHover component
+                    if (!hasOnHoverComponent && isCurrentCellOnHover)
+                    {
+                        ecb.AddComponent<GridCellOnHoverComponent>(entityInQueryIndex, entity);
+                    }
 
-                        // Manage OnHover
-                        bool hasOnHoverComponent = HasComponent<GridCellOnHoverComponent>(entity);
-
-                        if (hasOnHoverComponent && !isCurrentCellOnHover)
-                        {
-                            ecb.RemoveComponent<GridCellOnHoverComponent>(entityInQueryIndex, entity);
-                        }
-                        else if (isCurrentCellOnHover)
-                        {
-                            // Add component if the mouse is over a cell without an already existing OnHover component
-                            if(!hasOnHoverComponent)
-                                ecb.AddComponent<GridCellOnHoverComponent>(entityInQueryIndex, entity);
-
-                            if (lbPressedThisFrame)
-                                ecb.AddComponent<GridCellOnClickedComponent>(entityInQueryIndex, entity);
-                        }
-
-                    }).ScheduleParallel(Dependency);
+                }).ScheduleParallel(Dependency);
 
                 jobHandle.Complete();
 

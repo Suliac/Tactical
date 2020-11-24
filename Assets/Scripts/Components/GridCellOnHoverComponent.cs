@@ -2,4 +2,5 @@
 
 public struct GridCellOnHoverComponent : IComponentData
 {
+    public bool LeftClickOnCellThisFrame;
 }
