@@ -23,7 +23,7 @@ public class DrawCellOnHoverSystem : SystemBase
         Entities
             .WithoutBurst()
             .WithName("Highlighter")
-            .ForEach((ref Translation trans, in CellHighlighterComponent highlight) =>
+            .ForEach((ref Translation trans, in GridCellHighlighterComponent highlight) =>
             {
                 trans.Value = new float3(gridWorldPos.x + 0.5f, gridWorldPos.y, gridWorldPos.z + 0.5f);
             }).Run();
