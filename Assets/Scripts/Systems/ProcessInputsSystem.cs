@@ -65,12 +65,14 @@ public class ProcessInputsSystem : SystemBase
 
                     if (hasOnHoverComponent && !isCurrentCellOnHover)
                     {
+                        //Debug.Log($"Remove [OnHover] to cell : {cell.GridPosition}");
                         ecb.RemoveComponent<GridCellOnHoverComponent>(entityInQueryIndex, entity);
                     }
 
                     // Add component if the mouse is over a cell without an already existing OnHover component
                     if (!hasOnHoverComponent && isCurrentCellOnHover)
                     {
+                        //Debug.Log($"Add [OnHover] on hover to cell : {cell.GridPosition}");
                         ecb.AddComponent<GridCellOnHoverComponent>(entityInQueryIndex, entity);
                     }
 

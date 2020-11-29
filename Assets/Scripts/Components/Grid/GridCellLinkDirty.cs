@@ -1,5 +1,5 @@
 ﻿using Unity.Entities;
 
-public class GridCellLinkDirty : IComponentData
+public struct GridCellLinkDirty : IComponentData
 { 
 }

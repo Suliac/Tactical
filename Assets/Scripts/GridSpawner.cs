@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GridSpawner : MonoBehaviour
 {
-    public GameObject TextPrefab;
+    public GameObject HighlightedSelectedCell;
+    public GameObject HighlightedHoveredCell;
 
     [Header("Grid Params")]
     public uint ParamGridWidth = 10;
@@ -14,6 +15,9 @@ public class GridSpawner : MonoBehaviour
     void Start()
     {
         var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        Instantiate(HighlightedHoveredCell, new Vector3(0f, -10f, 0), quaternion.identity);
+        Instantiate(HighlightedSelectedCell, new Vector3(0f, -10f, 0), quaternion.identity);
 
         // Create archetypes
         EntityArchetype archetypeGrid = entityManager.CreateArchetype(

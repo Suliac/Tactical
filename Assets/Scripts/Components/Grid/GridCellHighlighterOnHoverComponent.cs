@@ -2,6 +2,6 @@
 using Unity.Entities;
 
 [GenerateAuthoringComponent]
-public struct GridCellHighlighterComponent : IComponentData
+public struct GridCellHighlighterOnHoverComponent : IComponentData
 {
 }

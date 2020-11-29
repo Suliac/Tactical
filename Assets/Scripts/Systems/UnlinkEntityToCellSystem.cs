@@ -42,7 +42,7 @@ public class UnlinkEntityToCellSystem : SystemBase
                         if (actorGridPos.x != cellInfo.GridPosition.x || actorGridPos.y != cellInfo.GridPosition.y)
                             {
                                 EntityManager.RemoveComponent(entity, typeof(GridCellLinkToEntity));
-                                //EntityManager.RemoveComponent(entity, typeof(GridCellLinkDirty));
+                                EntityManager.RemoveComponent(entity, typeof(GridCellLinkDirty));
                                 Debug.Log($"Unlink cell at pos {cellInfo.GridPosition} with its old entity");
                             }
                         }
