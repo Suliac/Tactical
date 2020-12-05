@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1315198237815614233}
   - component: {fileID: 8330116493945031330}
   - component: {fileID: 1587559516861337403}
+  - component: {fileID: 4790088141280927807}
   m_Layer: 0
   m_Name: Actor_Ranger
   m_TagString: Untagged
@@ -115,6 +116,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseDamage: 2
+--- !u!114 &4790088141280927807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2707731679247069153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61be2e068f3e2941997b8e0ebd9bf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxRangeMove: 3
 --- !u!1 &2873734031117501987
 GameObject:
   m_ObjectHideFlags: 0

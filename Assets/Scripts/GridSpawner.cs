@@ -6,6 +6,7 @@ public class GridSpawner : MonoBehaviour
 {
     public GameObject HighlightedSelectedCell;
     public GameObject HighlightedHoveredCell;
+    public GameObject HighlightedMovableCell;
 
     [Header("Grid Params")]
     public uint ParamGridWidth = 10;
@@ -46,7 +47,9 @@ public class GridSpawner : MonoBehaviour
                 entityManager.AddComponentData(cell, new GridCellComponent()
                 {
                     GridPosition = new uint2(x, y)
-            });
+                });
+
+                Instantiate(HighlightedMovableCell, new Vector3(0f, -10f, 0), quaternion.identity);
             }
         }
     }

@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: -7848806897172263809}
   - component: {fileID: -7446688311790287105}
   - component: {fileID: 4676852650194817179}
+  - component: {fileID: -778800150766679140}
   m_Layer: 0
   m_Name: Actor_Mage
   m_TagString: Untagged
@@ -360,3 +361,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseDamage: 1
+--- !u!114 &-778800150766679140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688091958672327038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61be2e068f3e2941997b8e0ebd9bf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxRangeMove: 3

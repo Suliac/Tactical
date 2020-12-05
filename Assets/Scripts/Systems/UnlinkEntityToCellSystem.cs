@@ -29,8 +29,8 @@ public class UnlinkEntityToCellSystem : SystemBase
             Entities
                 .WithName("CellsWithDirtyLink")
                 .WithStructuralChanges()
-                .WithAll<GridCellLinkDirty, GridCellLinkToEntity, GridCellComponent>()
-                .ForEach((Entity entity, int entityInQueryIndex, in GridCellLinkToEntity cellLink, in GridCellComponent cellInfo) =>
+                .WithAll<GridCellLinkDirty, GridCellLinkToEntityComponent, GridCellComponent>()
+                .ForEach((Entity entity, int entityInQueryIndex, in GridCellLinkToEntityComponent cellLink, in GridCellComponent cellInfo) =>
                 {
                     for (int i = 0; i < actorEntity.Length; i++)
                     {
@@ -41,7 +41,7 @@ public class UnlinkEntityToCellSystem : SystemBase
                         // linked actor isn't on this celle anymore ...
                         if (actorGridPos.x != cellInfo.GridPosition.x || actorGridPos.y != cellInfo.GridPosition.y)
                             {
-                                EntityManager.RemoveComponent(entity, typeof(GridCellLinkToEntity));
+                                EntityManager.RemoveComponent(entity, typeof(GridCellLinkToEntityComponent));
                                 EntityManager.RemoveComponent(entity, typeof(GridCellLinkDirty));
                                 Debug.Log($"Unlink cell at pos {cellInfo.GridPosition} with its old entity");
                             }

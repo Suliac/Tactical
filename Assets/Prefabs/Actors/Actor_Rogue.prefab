@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 813754096510667416}
   - component: {fileID: 2156722999239568208}
   - component: {fileID: 5963145118693198815}
+  - component: {fileID: 1581234111251110029}
   m_Layer: 0
   m_Name: Actor_Rogue
   m_TagString: Untagged
@@ -196,6 +197,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseDamage: 3
+--- !u!114 &1581234111251110029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814782388353099094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61be2e068f3e2941997b8e0ebd9bf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxRangeMove: 3
 --- !u!1 &3058506387865595415
 GameObject:
   m_ObjectHideFlags: 0

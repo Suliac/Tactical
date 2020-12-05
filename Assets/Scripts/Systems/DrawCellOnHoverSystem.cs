@@ -41,7 +41,7 @@ public class DrawCellOnHoverSystem : SystemBase
                     .WithName("HighlightOnHover")
                     .ForEach((ref Translation trans, in GridCellHighlighterOnHoverComponent highlighter) =>
                     {
-                        Debug.Log($"DRAW ONHOVER | {gridWorldPos} - lastPos {m_LastOnHoverPos}");
+                        //Debug.Log($"DRAW ONHOVER | {gridWorldPos} - lastPos {m_LastOnHoverPos}");
                         trans.Value = new float3(gridWorldPos.x + 0.5f, gridWorldPos.y, gridWorldPos.z + 0.5f);
                     }).Run();
 

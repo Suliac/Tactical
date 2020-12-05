@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: -3578903236571897194}
   - component: {fileID: -567490036332002959}
   - component: {fileID: 3101512368609397694}
+  - component: {fileID: 1246754140530060716}
   m_Layer: 0
   m_Name: Actor_Ennemy
   m_TagString: Untagged
@@ -360,3 +361,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseDamage: 1
+--- !u!114 &1246754140530060716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9168390694317690193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61be2e068f3e2941997b8e0ebd9bf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxRangeMove: 3

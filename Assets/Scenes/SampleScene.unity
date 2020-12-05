@@ -1912,6 +1912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightedSelectedCell: {fileID: 6446174718005970754, guid: 3753a392fe03ddb4ab93150b5f3a1205, type: 3}
   HighlightedHoveredCell: {fileID: 6446174718005970754, guid: 041cfdf537282be47942a2624bb7de6a, type: 3}
+  HighlightedMovableCell: {fileID: 6446174718005970754, guid: cdd1a7c30219d834d8e69e4b198c4f8d, type: 3}
   ParamGridWidth: 10
   ParamGridLength: 10
 --- !u!4 &1044018435

@@ -8,7 +8,6 @@ public class DrawCellSelectedSystem : SystemBase
     float3 m_LastSelectedPos = new float3(-1f, -1f, -1f);
     
     EntityQuery m_CellsSelectedQuery;
-
     protected override void OnCreate()
     {
         m_CellsSelectedQuery = GetEntityQuery(ComponentType.ReadOnly<GridCellComponent>(), ComponentType.ReadOnly<GridCellSelectedComponent>());
@@ -39,7 +38,7 @@ public class DrawCellSelectedSystem : SystemBase
                     .WithName("HighlightSelected")
                     .ForEach((ref Translation trans, in GridCellHighlighterOnSelectComponent highlighter) =>
                     {
-                        Debug.Log($"DRAW SELECT - {gridSelectedPos} - lastPos {m_LastSelectedPos}");
+                        //Debug.Log($"DRAW SELECT - {gridSelectedPos} - lastPos {m_LastSelectedPos}");
                         trans.Value = new float3(gridSelectedPos.x + 0.5f, gridSelectedPos.y, gridSelectedPos.z + 0.5f);
                     }).Run();
                 m_LastSelectedPos = gridSelectedPos;

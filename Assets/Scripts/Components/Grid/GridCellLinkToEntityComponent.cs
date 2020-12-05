@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-public struct GridCellLinkToEntity : IComponentData
+public struct GridCellLinkToEntityComponent : IComponentData
 {
     public Entity LinkedActor;
 }

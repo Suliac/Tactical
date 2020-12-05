@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 6003021819233813805}
   - component: {fileID: -3382074964885370337}
   - component: {fileID: 546212619608366707}
+  - component: {fileID: -5942855459067357076}
   m_Layer: 0
   m_Name: Actor_Warrior
   m_TagString: Untagged
@@ -360,3 +361,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseDamage: 1
+--- !u!114 &-5942855459067357076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7316640956257190799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61be2e068f3e2941997b8e0ebd9bf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxRangeMove: 3
